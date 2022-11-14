@@ -2,7 +2,20 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import login from '../../assets/images/login.svg'
 
-const Register = () => {
+const Login = () => {
+
+
+
+    const handelSubmit = (event) => {
+        event.preventDefault()
+        //all input field
+        const from = event?.target;
+        const email = from?.email?.value;
+        const password = from?.Password?.value;
+        console.log(email,password)
+
+    }
+
     return (
         <div className='flex flex-col md:flex-row'>
             <div className='w-1/2 flex justify-center items-center pt-8 mx-5 mt-16'>
@@ -17,6 +30,7 @@ const Register = () => {
                         </p>
                     </div>
                     <form 
+                        onSubmit={ handelSubmit}
                         noValidate=''
                         action=''
                         className='space-y-2 ng-untouched ng-pristine ng-valid'
@@ -118,4 +132,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default Login;

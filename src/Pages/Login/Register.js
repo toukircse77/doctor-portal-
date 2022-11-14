@@ -1,8 +1,70 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 
-const Login = () => {
+const Register = () => {
+    const navigat = useNavigate()
+    //user jodi login ar age onno kono page jete cay tar jonno
+    const location = useLocation()
+
+    //import data distracting in useContext(AuthContext)
+    // const { user, creatUser, emailVerifiCations, upDateUser, singInAutoGoogle, gitHubAutoLogIn, googleAutoLogIn } = useContext(AuthContext);
+    // console.log(creatUser, emailVerifiCations, upDateUser)
+
+    const [error, setError] = useState();
+    const [successRegistion, setSuccess] = useState();
+
+    //all from submition
+    const handelSubmitbtn = (event) => {
+        // not relode page 
+        event.preventDefault()
+
+        //all input field
+        const from = event?.target;
+        const name = from?.name?.value;
+        const email = from?.email?.value;
+        const password = from?.Password?.value;
+        const confirmPassword = from?.cPasswor?.value
+        console.log(name,email,password,confirmPassword)
+
+        //password condition
+        const upper = /[A-Z]/;
+        var letter = /[a-z]/;
+        const number = /[0-9]/;
+        //all condition set 1 ++
+
+        if (password.length <= 6) {
+            return setError("! Minimum 6 characters up required")
+
+        }
+
+        else if (!letter.test(password)) {
+            return setError("👉 Please make sure password includes an lowercase letter 👈.")
+
+
+        }
+        else if (!upper.test(password)) {
+            return setError("👉 Please make sure password includes an uppercase letter 👈.")
+        }
+        else if (!number.test(password)) {
+            return setError("👉 Please make sure Password Includes a digit/number 👈")
+
+
+        }
+        else if (password !== confirmPassword) {
+            return setError("👉 Please make sure passwords match.👈!")
+
+        }
+        else {
+            setSuccess("You are success Registration 👍👍")
+        }
+
+       
+         
+    }
+
+
+
     return (
         <>
         <div className='reGistration flex justify-center items-center pt-5 mx-5 mt-16'>
@@ -12,6 +74,7 @@ const Login = () => {
                     <p className='text-sm text-gray-400'>Create a new account</p>
                 </div>
                 <form 
+                    onSubmit={handelSubmitbtn}
                     noValidate=''
                     action=''
                     className='space-y-1 ng-untouched ng-pristine ng-valid'
@@ -71,7 +134,7 @@ const Login = () => {
                                 className='w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-200 focus:border-gray-900 text-gray-900'
                                 required />
                         </div>
-                        <p className='text-center text-red-400 text-xs pb-1'></p><p className='text-center text-green-500 text-xs pb-1'></p>
+                        <p className='text-center text-red-400 text-xs pb-1'></p>{error}<p className='text-center text-green-500 text-xs pb-1'>{successRegistion}</p>
                     </div>
                     <div className='space-y-2'>
                         <div>
@@ -118,4 +181,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Register;
