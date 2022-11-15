@@ -2,7 +2,6 @@ import React from 'react';
 
 const InfoCart = ({ cart }) => {
     const {icon,description,title,bgClass} = cart;
-    console.log(cart)
     return (
         <div className={`${bgClass} rounded-xl `}>
             <div className="card md:card-side shadow-xl p-3">

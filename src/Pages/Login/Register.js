@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
+import { AuthContext } from '../../Context/UserContext';
+import { toast } from 'react-toastify';
 
 const Register = () => {
-    const navigat = useNavigate()
+    const {creatUser,upDateUser} = useContext(AuthContext);
+    const navigate = useNavigate()
     //user jodi login ar age onno kono page jete cay tar jonno
     const location = useLocation()
 
@@ -25,7 +28,6 @@ const Register = () => {
         const email = from?.email?.value;
         const password = from?.Password?.value;
         const confirmPassword = from?.cPasswor?.value
-        console.log(name,email,password,confirmPassword)
 
         //password condition
         const upper = /[A-Z]/;
@@ -39,25 +41,41 @@ const Register = () => {
         }
 
         else if (!letter.test(password)) {
-            return setError("👉 Please make sure password includes an lowercase letter 👈.")
+            return setError(" Please make sure password includes an lowercase letter ")
 
 
         }
         else if (!upper.test(password)) {
-            return setError("👉 Please make sure password includes an uppercase letter 👈.")
+            return setError("Please make sure password includes an uppercase letter ")
         }
         else if (!number.test(password)) {
-            return setError("👉 Please make sure Password Includes a digit/number 👈")
+            return setError(" Please make sure Password Includes a digit/number")
 
 
         }
         else if (password !== confirmPassword) {
-            return setError("👉 Please make sure passwords match.👈!")
+            return setError(" Please make sure passwords match.!")
 
         }
         else {
-            setSuccess("You are success Registration 👍👍")
+            setSuccess("You are success Registration ")
         }
+
+        creatUser(email,password)
+        .then(result => {
+            const user = result.user
+            setTimeout(() => {
+                toast.success('your Account Create successfully')
+                navigate('/login')
+            }, 1500);
+            //Update User Name
+            upDateUser(name)
+                .then(() => {
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }).catch(err => console.error(err))
 
        
          
@@ -147,28 +165,7 @@ const Register = () => {
                         </div>
                     </div>
                 </form>
-                <div className='flex items-center pt-4 space-x-1'>
-                    <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
-                    <p className='px-3 text-sm dark:text-gray-400'>
-                        Signup with social accounts
-                    </p>
-                    <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
-                </div>
-                <div className='flex justify-center space-x-4'>
-
-                    <button  aria-label='Log in with Google' className='p-3 rounded-sm'>
-                        <h1 className='text-2xl'><FaGoogle></FaGoogle></h1>
-                    </button>
-
-                    <button aria-label='Log in with Facbook' className='p-3 rounded-sm'>
-                        <h1 className='text-3xl text-blue-700'><FaFacebook></FaFacebook></h1>
-                    </button>
-
-                    <button id='#' aria-label='Log in with GitHub' className='p-3 rounded-sm'>
-                        <h1 className='text-2xl'><FaGithub></FaGithub></h1>
-                    </button>
-                </div>
-                <p className='px-6 text-sm text-center text-gray-400 pb-3'>
+                <p className='px-6 mt-3 text-sm text-center text-gray-400 pb-3'>
                     Already have an account yet?{' '}
                     <Link to='/login' href='#' className='hover:underline text-gray-600'>
                         Sign In

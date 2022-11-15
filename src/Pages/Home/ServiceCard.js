@@ -2,7 +2,6 @@ import React from 'react';
 
 const ServiceCard = ({service}) => {
     const {name,describtion,icon} = service
-    console.log(service)
     return (
         <div className="card w-full bg-base-100 shadow-xl">
   <figure className="pt-10">

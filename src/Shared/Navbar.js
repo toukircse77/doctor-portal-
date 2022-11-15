@@ -1,15 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import UserContext, { AuthContext } from '../Context/UserContext';
 
 const Navbar = () => {
+  const {user, userLogOut} = UserContext(AuthContext);
+
+  const logOutBtn = () =>{
+    userLogOut()
+    .then(()=>{
+      alert("logout successfully")
+    }).catch(error => console.error(error))
+}
     const menuItem = <React.Fragment>
         <Link to="/home"><li><a href="#">Home</a></li></Link>
         <Link to="/about"><li><a href="#">About</a></li></Link>
         <Link to="/appoinment"><li><a href="#">Appoinment</a></li></Link>
         <Link to="/reviews"><li><a href="#">Reviews</a></li></Link>
-        <Link to="contactUs"><li><a href="#">Contact Us</a></li></Link>
-        <Link to="login"><li><a href="#">Login</a></li></Link>
-        <Link to="register"><li><a href="#">SignUp</a></li></Link>
+        <Link to="/contactUs"><li><a href="#">Contact Us</a></li></Link>
+        <Link to="/login"><li><a href="#">Login</a></li></Link>
+        <Link to="/register"><li><a href="#">SignUp</a></li></Link>
+        <Link to='/' onClick={logOutBtn} ><li><a href="#">Logout</a></li></Link>
+        {
+           user?.uid ? <p>{user.displayName}</p> : <>"no user"</>
+        }
         
     </React.Fragment>
     return (
