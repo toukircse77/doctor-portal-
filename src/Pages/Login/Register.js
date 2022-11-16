@@ -64,13 +64,16 @@ const Register = () => {
         creatUser(email,password)
         .then(result => {
             const user = result.user
+            navigate('/login')
+            
             setTimeout(() => {
                 toast.success('your Account Create successfully')
                 navigate('/login')
-            }, 1500);
+            },);
             //Update User Name
             upDateUser(name)
                 .then(() => {
+                    navigate('/')
                 })
                 .catch(error => {
                     console.log(error);
