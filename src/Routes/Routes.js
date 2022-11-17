@@ -2,6 +2,7 @@ import Apoinment from "../Pages/Appoinment/Apoinment";
 import DashBoard from "../Pages/DashBoard/DashBoard";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Login/Register";
+import DashboardLayout from "../Shared/DashboardLayout";
 import PrivateRoute from "../Shared/PrivateRoute";
 const { createBrowserRouter } = require("react-router-dom");
 const { default: Home } = require("../Pages/Home/Home");
@@ -34,13 +35,18 @@ export const router = createBrowserRouter([
             {
                 path:'/register',
                 element:<Register/>
-            },
-            {
-                path:'/dashboard',
-                element:<PrivateRoute><DashBoard/></PrivateRoute>
-            },
-
+            }
         ]
 
-    }
+    },
+        {
+            path:'/dashboard',
+            element:<PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+            children:[
+                {
+                    path:'/dashboard',
+                    element:<DashBoard/>
+                }
+            ]
+        }
 ])

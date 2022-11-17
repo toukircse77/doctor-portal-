@@ -1,7 +1,7 @@
 import { async } from '@firebase/util';
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import AppoinmentOptions from './AppoinmentOptions';
 import BookingModal from './BookingModal';
 
@@ -13,7 +13,7 @@ const AvailableAppoinment = ({ selectedDate }) => {
     const { isLoading,data:appoinmentOption = [],refetch} = useQuery({
         queryKey: ['appoinmentOption',date],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/appoinmentOptions?date=${date}`);
+            const res = await fetch(`https://doctor-server-beta.vercel.app/appoinmentOptions?date=${date}`);
             const data = await res.json();
             return data
         }
