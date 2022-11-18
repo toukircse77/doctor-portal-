@@ -2,6 +2,7 @@ import Apoinment from "../Pages/Appoinment/Apoinment";
 import DashBoard from "../Pages/DashBoard/DashBoard";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Login/Register";
+import AllUsers from "../Shared/AllUsers";
 import DashboardLayout from "../Shared/DashboardLayout";
 import Myappoinment from "../Shared/Myappoinment";
 import PrivateRoute from "../Shared/PrivateRoute";
@@ -47,6 +48,10 @@ export const router = createBrowserRouter([
                 {
                     path:'/dashboard',
                     element:<Myappoinment/>
+                },
+                {
+                    path:'/dashboard/allUsers',
+                    element:<AllUsers/>
                 }
             ]
         }

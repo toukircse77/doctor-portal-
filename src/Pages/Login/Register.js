@@ -28,7 +28,7 @@ const Register = () => {
         const email = from?.email?.value;
         const password = from?.Password?.value;
         const confirmPassword = from?.cPasswor?.value
-
+    
         //password condition
         const upper = /[A-Z]/;
         var letter = /[a-z]/;
@@ -73,15 +73,51 @@ const Register = () => {
             //Update User Name
             upDateUser(name)
                 .then(() => {
-                    navigate('/')
+                    saveUser(name,email);
+                    
                 })
                 .catch(error => {
                     console.log(error);
                 });
         }).catch(err => console.error(err))
 
-       
-         
+    }
+
+    const saveUser = (name,email) =>{
+        const user = {
+            name,
+            email
+        }
+        fetch('http://localhost:5000/users',{
+            method:'POST',
+            headers:{
+             'content-type': 'application/json'
+            },
+            body: JSON.stringify(user) 
+         })
+         .then(res => res.json())
+         .then(data => {
+            // getUserToken(email)
+            
+             if(data.acknowledged){
+                navigate('/')
+                 toast.success('save data mongodb successfully')   
+             }
+             else {
+                 toast.error(data.message)
+             }    
+         }) 
+
+        //  const getUserToken =( email) =>{
+        //     fetch(`http://localhost:5000/jwt?email=${email}`)
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         if(data.accessToken){
+        //            localStorage.setItem('accessToken', data.accessToken)
+        //             navigate('/')
+        //         }
+        //     })
+        //  }
     }
 
 
